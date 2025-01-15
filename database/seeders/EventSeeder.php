@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Event;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class EventSeeder extends Seeder
@@ -12,6 +15,11 @@ class EventSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $creators = User::factory()->count(3)->create();
+
+        Event::factory()
+            ->count(20)
+            ->recycle($creators)
+            ->create();
     }
 }

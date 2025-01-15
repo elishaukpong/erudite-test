@@ -17,7 +17,13 @@ class EventFilter extends QueryFilter
 
     public function participant_count($value): Builder
     {
-        return $this->builder->where('max_participant_count', $value);
+        $participant_count = explode(',', $value);
+
+        if (count($participant_count) > 1) {
+            return $this->builder->whereBetween('max_participant_count', $participant_count);
+        }
+
+        return $this->builder->whereDate('max_participant_count', $participant_count[0]);
     }
 
     public function created_by($value): Builder
