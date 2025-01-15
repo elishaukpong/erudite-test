@@ -15,6 +15,7 @@ use App\Services\EventService;
 use App\Traits\APIResponses;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class EventController extends Controller
@@ -41,7 +42,11 @@ class EventController extends Controller
         try {
             $event = $this->eventService->store($request->validated());
 
-            return $this->ok(__('Event created!'), new EventResource($event));
+            return $this->ok(
+                __('Event created!'),
+                new EventResource($event),
+                Response::HTTP_CREATED
+            );
         }catch (Throwable $e) {
             return $this->error($e->getMessage(), $e->getCode());
         }

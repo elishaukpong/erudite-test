@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string('name')->index();
-            $table->dateTime('start_date');
+            $table->dateTime('start_date')->index();
             $table->dateTime('end_date');
             $table->integer('max_participant_count');
 

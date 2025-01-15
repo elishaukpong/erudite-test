@@ -21,5 +21,6 @@ Route::middleware('auth:sanctum')
     ->prefix('v1')
     ->group(function(){
         Route::apiResource('events', EventController::class);
-        Route::apiResource('events/{event}/participant', EventParticipantController::class);
+        Route::apiResource('events/{event}/participants', EventParticipantController::class)
+            ->only(['index','store','destroy']);
     });

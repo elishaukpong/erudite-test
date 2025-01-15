@@ -25,7 +25,7 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
-            $table->boolean('has_been_notified');
+            $table->boolean('has_been_notified')->default(false);
             $table->timestamps();
         });
     }

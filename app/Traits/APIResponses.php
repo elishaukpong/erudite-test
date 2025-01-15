@@ -9,9 +9,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 trait APIResponses
 {
-    public function ok(string $message, mixed $data = []): JsonResponse
+    public function ok(string $message, mixed $data = [], $statusCode = 200): JsonResponse
     {
-        return $this->success($message, $data);
+        return $this->success($message, $data, $statusCode);
     }
 
     protected function success(string $message, mixed $data = [], int|string $statusCode = 200): JsonResponse

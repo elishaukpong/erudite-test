@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
 use App\Models\Event;
@@ -45,7 +47,7 @@ class EventPolicy
      */
     public function delete(User $user, Event $event): bool
     {
-        return false;
+        return $event->created_by === $user->id;
     }
 
     /**
@@ -53,7 +55,7 @@ class EventPolicy
      */
     public function restore(User $user, Event $event): bool
     {
-        return false;
+        return $event->created_by === $user->id;
     }
 
     /**
@@ -61,6 +63,6 @@ class EventPolicy
      */
     public function forceDelete(User $user, Event $event): bool
     {
-        return false;
+        return $event->created_by === $user->id;
     }
 }

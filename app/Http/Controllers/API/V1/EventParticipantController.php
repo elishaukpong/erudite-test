@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\Events\StoreEventRequest;
+use App\Http\Requests\API\EventParticipants\StoreEventParticipantRequest;
 use App\Http\Resources\EventResource;
 use App\Models\Event;
 use App\Services\EventParticipantService;
@@ -23,12 +23,12 @@ class EventParticipantController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Event $event, StoreEventRequest $request): JsonResponse
+    public function store(Event $event, StoreEventParticipantRequest $request): JsonResponse
     {
         try {
-            $event = $this->eventParticipantService->store($request->validated());
+            $this->eventParticipantService->store($event, $request->validated());
 
-            return $this->ok(__('Event Participant(s) created!'), new EventResource($event));
+            return $this->ok(__('Event Participant registered!'), new EventResource($event));
         }catch (Throwable $e) {
             return $this->error($e->getMessage(), $e->getCode());
         }

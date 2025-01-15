@@ -31,7 +31,19 @@ class Event extends Model
 
     public function participants(): BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)
+            ->withPivot('has_been_notified')
+            ->withTimestamps();
+    }
+
+    public function getRemainingParticipantsCountAttribute(): int
+    {
+        return $this->max_participant_count - $this->participants()->count();
+    }
+
+    public function canAddParticipant(): bool
+    {
+        return $this->remaining_participants_count > 0;
     }
 
     public function scopeFilter(Builder $builder, QueryFilter $filters): Builder
