@@ -34,4 +34,9 @@ class EventParticipantController extends Controller
         }
     }
 
+    public function destroy()
+    {
+        
+    }
+
 }

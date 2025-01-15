@@ -30,7 +30,8 @@ class EventResource extends JsonResource
                 'updatedAt' => $this->updated_at
             ],
             'relationships' => [
-                'creator' => new UserResource($this->createdBy)
+                'creator' => new UserResource($this->createdBy),
+                'participants' => ParticipantResource::collection($this->participants),
             ]
         ];
     }
