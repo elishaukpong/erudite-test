@@ -4,47 +4,61 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\API;
 
+use App\Exceptions\Authentication\InvalidCredentialsException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\LoginUserRequest;
-use App\Models\User;
+use App\Http\Requests\API\RegisterUserRequest;
+use App\Services\AuthenticationService;
 use App\Traits\APIResponses;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Throwable;
 
 class AuthController extends Controller
 {
     use APIResponses;
 
+
+    public function __construct(protected AuthenticationService $authenticationService)
+    {}
+
     public function login(LoginUserRequest $request): JsonResponse
     {
-        if(! Auth::attempt($request->only('email','password'))) {
-            return $this->error('Invalid Credentials', 401);
+        try {
+            $tokenData = $this->authenticationService->login($request->only('email','password'));
+
+            return $this->ok(
+                __('Authenticated'),
+                $tokenData
+            );
+
+        } catch (InvalidCredentialsException | Throwable $e) {
+            return $this->error($e->getMessage(), $e->getCode());
         }
-
-        $user = User::firstWhere('email', $request->email);
-
-        return $this->ok(
-            'Authenticated',
-            [
-                'token' => $user->createToken(
-                    'API token for ' . $user->email,
-                    ['*'],
-                    now()->addMonth()
-                )->plainTextToken
-            ]
-        );
     }
 
     public function logout(Request $request): JsonResponse
     {
-        $request->user()->currentAccessToken()->delete();
+        try {
+            $this->authenticationService->logout($request);
 
-        return $this->ok('UnAuthenticated');
+            return $this->ok(__('UnAuthenticated'));
+        } catch (Throwable $e) {
+            return $this->error($e->getMessage(), $e->getCode());
+        }
     }
 
-    public function register(): JsonResponse
+    public function register(RegisterUserRequest $request): JsonResponse
     {
-        return $this->ok('Register');
+        try {
+            $tokenData = $this->authenticationService->register($request->all());
+
+            return $this->ok(
+                __('User Registered'),
+                $tokenData
+            );
+        } catch (Throwable $e) {
+            return $this->error($e->getMessage(), $e->getCode());
+        }
     }
 }

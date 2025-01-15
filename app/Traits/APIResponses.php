@@ -5,15 +5,16 @@ declare(strict_types=1);
 namespace App\Traits;
 
 use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 trait APIResponses
 {
-    public function ok($message, $data = []): JsonResponse
+    public function ok(string $message, array $data = []): JsonResponse
     {
         return $this->success($message, $data);
     }
 
-    protected function success($message, $data = [], $statusCode = 200): JsonResponse
+    protected function success(string $message, array $data = [], int|string $statusCode = 200): JsonResponse
     {
         return response()->json([
             'data' => $data,
@@ -22,8 +23,10 @@ trait APIResponses
         ],$statusCode);
     }
 
-    protected function error($message, $statusCode): JsonResponse
+    protected function error(string $message, int|string $statusCode): JsonResponse
     {
+        $statusCode = $statusCode === 0 ? Response::HTTP_UNPROCESSABLE_ENTITY : $statusCode;
+
         return response()->json([
             'message' => $message,
             'status' => $statusCode
