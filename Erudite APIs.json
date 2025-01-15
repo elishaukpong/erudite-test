@@ -1,0 +1,437 @@
+{
+	"info": {
+		"_postman_id": "21f2e291-1ccb-4987-b0e9-4b6964218fec",
+		"name": "Erudite APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37632424",
+		"_collection_link": "https://elishau.postman.co/workspace/Team-Workspace~9880f115-ec91-4d0a-8be7-70bd27eb7dc9/collection/37632424-21f2e291-1ccb-4987-b0e9-4b6964218fec?action=share&source=collection_link&creator=37632424"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "test@example.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "John Doe",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "erudite.test/api/register",
+							"host": [
+								"erudite",
+								"test"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "ansley.torphy@example.net",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "erudite.test/api/login",
+							"host": [
+								"erudite",
+								"test"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|hQLzNwftc361QMD8UCayzDIIiXnnDze8ebNL2inYb2003ce0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "erudite.test/api/logout",
+							"host": [
+								"erudite",
+								"test"
+							],
+							"path": [
+								"api",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Events",
+			"item": [
+				{
+					"name": "Events",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "erudite.test/api/v1/events",
+							"host": [
+								"erudite",
+								"test"
+							],
+							"path": [
+								"api",
+								"v1",
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Store Event",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Physics 108",
+									"type": "text"
+								},
+								{
+									"key": "start_date",
+									"value": "2024-11-15 14:30:00",
+									"type": "text"
+								},
+								{
+									"key": "end_date",
+									"value": "2024-12-15 14:30:00",
+									"type": "text"
+								},
+								{
+									"key": "max_participant_count",
+									"value": "5",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "erudite.test/api/v1/events",
+							"host": [
+								"erudite",
+								"test"
+							],
+							"path": [
+								"api",
+								"v1",
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Event",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "erudite.test/api/v1/events/12",
+							"host": [
+								"erudite",
+								"test"
+							],
+							"path": [
+								"api",
+								"v1",
+								"events",
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Event",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "max_participant_count",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Chemistry",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "erudite.test/api/v1/events/1",
+							"host": [
+								"erudite",
+								"test"
+							],
+							"path": [
+								"api",
+								"v1",
+								"events",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Event",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "erudite.test/api/v1/events/10",
+							"host": [
+								"erudite",
+								"test"
+							],
+							"path": [
+								"api",
+								"v1",
+								"events",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Event Participant",
+			"item": [
+				{
+					"name": "Add Participant to Event",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "participant_id",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "erudite.test/api/v1/events/12/participants",
+							"host": [
+								"erudite",
+								"test"
+							],
+							"path": [
+								"api",
+								"v1",
+								"events",
+								"12",
+								"participants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Participant fom Event",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "participant_id",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "erudite.test/api/v1/events/12/participants/2",
+							"host": [
+								"erudite",
+								"test"
+							],
+							"path": [
+								"api",
+								"v1",
+								"events",
+								"12",
+								"participants",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "1|7fwnYA4Z8owS70WW9pWRuopPC1Bw1hSfzz14VOJtf992f8c4",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
