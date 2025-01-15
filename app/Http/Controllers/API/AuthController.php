@@ -6,8 +6,8 @@ namespace App\Http\Controllers\API;
 
 use App\Exceptions\Authentication\InvalidCredentialsException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\LoginUserRequest;
-use App\Http\Requests\API\RegisterUserRequest;
+use App\Http\Requests\API\Auth\LoginUserRequest;
+use App\Http\Requests\API\Auth\RegisterUserRequest;
 use App\Services\AuthenticationService;
 use App\Traits\APIResponses;
 use Illuminate\Http\JsonResponse;

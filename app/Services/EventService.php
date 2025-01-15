@@ -47,6 +47,13 @@ class EventService
         return $event->fresh();
     }
 
+    public function delete(Event $event): void
+    {
+        $event->participants()->detach();
+
+        $event->delete();
+    }
+
     /**
      * @param $max_participant_count
      * @param Event $event

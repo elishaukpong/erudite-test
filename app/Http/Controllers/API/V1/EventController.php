@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Exceptions\Event\MaxParticipantsCannotBeLowerThanCurrentException;
 use App\Http\Controllers\Controller;
+use App\Http\Filters\V1\EventFilter;
 use App\Http\Requests\API\Events\StoreEventRequest;
 use App\Http\Requests\API\Events\UpdateEventRequest;
 use App\Http\Resources\EventResource;
@@ -12,6 +14,7 @@ use App\Models\Event;
 use App\Services\EventService;
 use App\Traits\APIResponses;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Throwable;
 
 class EventController extends Controller
@@ -24,9 +27,10 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(EventFilter $filters): AnonymousResourceCollection
     {
-        //
+        return EventResource::collection(Event::filter($filters)->paginate());
+
     }
 
     /**
@@ -64,7 +68,7 @@ class EventController extends Controller
             $event = $this->eventService->update($event,$request->validated());
 
             return $this->ok(__('Event updated!'), new EventResource($event));
-        }catch (Throwable $e) {
+        }catch (MaxParticipantsCannotBeLowerThanCurrentException|Throwable $e) {
             return $this->error($e->getMessage(), $e->getCode());
         }
     }
@@ -72,8 +76,14 @@ class EventController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Event $event)
+    public function destroy(Event $event): JsonResponse
     {
-        //
+        try {
+            $this->eventService->delete($event);
+
+            return $this->ok(__('Event deleted!'));
+        }catch (Throwable $e) {
+            return $this->error($e->getMessage(), $e->getCode());
+        }
     }
 }
