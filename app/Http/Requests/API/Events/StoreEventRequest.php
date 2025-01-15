@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\API\Events;
 
+use App\Models\Event;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreEventRequest extends FormRequest
@@ -13,7 +14,7 @@ class StoreEventRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->user()->can('create', Event::class);
     }
 
     /**
@@ -24,7 +25,10 @@ class StoreEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|unique:events,name',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after:start_at',
+            'max_participant_count' => 'required|int',
         ];
     }
 }

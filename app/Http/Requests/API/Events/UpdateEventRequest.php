@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\API\Events;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -13,7 +13,9 @@ class UpdateEventRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        $event = $this->route('event');
+
+        return $this->user()->can('update', $event);
     }
 
     /**
@@ -24,7 +26,10 @@ class UpdateEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'sometimes|string',
+            'start_date' => 'sometimes|date',
+            'end_date' => 'sometimes|date|after:start_at',
+            'max_participant_count' => 'sometimes|int',
         ];
     }
 }

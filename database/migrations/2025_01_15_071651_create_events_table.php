@@ -19,6 +19,12 @@ return new class extends Migration
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->integer('max_participant_count');
+
+            $table->foreignId('created_by')
+                ->index()
+                ->constrained('users')
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
             $table->softDeletes();
             $table->timestamps();
         });

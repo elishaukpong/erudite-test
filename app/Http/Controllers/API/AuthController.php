@@ -42,7 +42,7 @@ class AuthController extends Controller
         try {
             $this->authenticationService->logout($request);
 
-            return $this->ok(__('UnAuthenticated'));
+            return $this->ok(__('Unauthenticated'));
         } catch (Throwable $e) {
             return $this->error($e->getMessage(), $e->getCode());
         }
