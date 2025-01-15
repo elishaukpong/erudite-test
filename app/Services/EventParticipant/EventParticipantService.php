@@ -38,9 +38,7 @@ class EventParticipantService
     private function participantHasConflictingStartDateForEvent(Event $event, int $participant_id): bool
     {
         return Event::whereDate('start_date', $event->start_date)
-            ->whereHas('participants', function(Builder $query) use ($participant_id) {
-                $query->where('users.id', $participant_id);
-            })
+            ->whereHas('participants', fn(Builder $query) => $query->where('users.id', $participant_id))
             ->exists();
     }
 

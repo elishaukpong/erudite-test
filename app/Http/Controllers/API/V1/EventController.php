@@ -31,7 +31,6 @@ class EventController extends Controller
     public function index(EventFilter $filters): AnonymousResourceCollection
     {
         return EventResource::collection(Event::filter($filters)->paginate());
-
     }
 
     /**

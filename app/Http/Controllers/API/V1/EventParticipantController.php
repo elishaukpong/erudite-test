@@ -14,6 +14,7 @@ use App\Models\User;
 use App\Services\EventParticipant\EventParticipantService;
 use App\Traits\APIResponses;
 use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class EventParticipantController extends Controller
@@ -31,8 +32,8 @@ class EventParticipantController extends Controller
         try {
             $this->eventParticipantService->store($event, $request->validated());
 
-            return $this->ok(__('Event Participant registered!'), new EventResource($event));
-        }catch (MaxParticipantsCountExceededException | OverlappingEventRegistrationException| Throwable $e) {
+            return $this->ok(__('Event Participant registered!'), new EventResource($event), Response::HTTP_CREATED);
+        }catch (MaxParticipantsCountExceededException | OverlappingEventRegistrationException | Throwable $e) {
             return $this->error($e->getMessage(), $e->getCode());
         }
     }

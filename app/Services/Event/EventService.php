@@ -6,38 +6,27 @@ namespace App\Services\Event;
 
 use App\Exceptions\Event\MaxParticipantsCannotBeLowerThanCurrentException;
 use App\Models\Event;
-use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
+/**
+ * Can decide to use a repository class for all db interactions
+ * or use action classes.
+ */
 class EventService
 {
 
-    /**
-     * @throws Exception
-     */
     public function store(array $data): Model
     {
-        /**
-         * Can decide to use a repository class for all db interactions
-         * or use action classes.
-         */
-
         return Event::create([
             ...$data,
             'created_by' => auth()->id()
         ]);
     }
 
-    /**
-     * @throws Exception
-     */
     public function update(Event $event, array $data): Model
     {
-        /**
-         * Can decide to use a repository class for all db interactions
-         * or use action classes.
-         */
-
         if(isset($data['max_participant_count']) && ! $this->hasValidMaxParticipantCount($event, (int) $data['max_participant_count'])) {
             throw new MaxParticipantsCannotBeLowerThanCurrentException();
         }
@@ -47,16 +36,26 @@ class EventService
         return $event->fresh();
     }
 
+    /**
+     * @throws Throwable
+     */
     public function delete(Event $event): void
     {
-        $event->participants()->detach();
+        DB::beginTransaction();
 
-        $event->delete();
+        try {
+            $event->participants()->detach();
+
+            $event->delete();
+        } catch (Throwable $e) {
+            throw $e;
+        }
+
     }
 
     /**
-     * @param $max_participant_count
      * @param Event $event
+     * @param int $max_participant_count
      * @return bool
      */
     public function hasValidMaxParticipantCount(Event $event, int $max_participant_count): bool
