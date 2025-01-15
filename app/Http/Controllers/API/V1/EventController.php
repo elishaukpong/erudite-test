@@ -11,7 +11,7 @@ use App\Http\Requests\API\Events\StoreEventRequest;
 use App\Http\Requests\API\Events\UpdateEventRequest;
 use App\Http\Resources\EventResource;
 use App\Models\Event;
-use App\Services\EventService;
+use App\Services\Event\EventService;
 use App\Traits\APIResponses;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;

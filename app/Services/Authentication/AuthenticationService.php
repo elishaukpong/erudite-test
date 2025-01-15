@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services;
+namespace App\Services\Authentication;
 
 use App\Exceptions\Authentication\InvalidCredentialsException;
 use App\Models\User;

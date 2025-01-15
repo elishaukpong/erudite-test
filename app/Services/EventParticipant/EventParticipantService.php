@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Services;
+namespace App\Services\EventParticipant;
 
 use App\Exceptions\EventParticipants\MaxParticipantsCountExceededException;
 use App\Exceptions\EventParticipants\OverlappingEventRegistrationException;
 use App\Models\Event;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -41,5 +42,10 @@ class EventParticipantService
                 $query->where('users.id', $participant_id);
             })
             ->exists();
+    }
+
+    public function delete(Event $event, User $participant): void
+    {
+        $event->participants()->detach($participant->id);
     }
 }

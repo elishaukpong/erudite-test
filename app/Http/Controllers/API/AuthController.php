@@ -8,7 +8,7 @@ use App\Exceptions\Authentication\InvalidCredentialsException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Auth\LoginUserRequest;
 use App\Http\Requests\API\Auth\RegisterUserRequest;
-use App\Services\AuthenticationService;
+use App\Services\Authentication\AuthenticationService;
 use App\Traits\APIResponses;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

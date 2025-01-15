@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace App\Http\Requests\API\Events;
 
 use App\Models\Event;
+use App\Traits\APIResponses;
 use Illuminate\Foundation\Http\FormRequest;
+use Symfony\Component\HttpFoundation\Response;
 
 class StoreEventRequest extends FormRequest
 {
+    use APIResponses;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -30,5 +34,10 @@ class StoreEventRequest extends FormRequest
             'end_date' => 'required|date|after:start_at',
             'max_participant_count' => 'required|int',
         ];
+    }
+
+    protected function failedAuthorization(): void
+    {
+        $this->error('Unauthorized action', Response::HTTP_FORBIDDEN)->send();
     }
 }

@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\API\Events;
 
+use App\Traits\APIResponses;
 use Illuminate\Foundation\Http\FormRequest;
+use Symfony\Component\HttpFoundation\Response;
 
 class UpdateEventRequest extends FormRequest
 {
+    use APIResponses;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -31,5 +35,10 @@ class UpdateEventRequest extends FormRequest
             'end_date' => 'sometimes|date|after:start_at',
             'max_participant_count' => 'sometimes|int',
         ];
+    }
+
+    protected function failedAuthorization(): void
+    {
+        $this->error('Unauthorized action', Response::HTTP_FORBIDDEN)->send();
     }
 }
