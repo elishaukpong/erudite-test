@@ -22,7 +22,7 @@ class EventResource extends JsonResource
             'attributes' => [
                 'name' => $this->name,
                 'start_date' => $this->start_date->format('Y-m-d H:i:s'),
-                'end_date' => $this->start_date->format('Y-m-d H:i:s'),
+                'end_date' => $this->end_date->format('Y-m-d H:i:s'),
                 'max_participant_count' => $this->max_participant_count,
                 'can_register_participant' => $this->max_participant_count > $registeredParticipantsCount,
                 'available_participant_slot' => $this->remaining_participants_count,
